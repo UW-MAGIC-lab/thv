@@ -171,15 +171,27 @@ export class Pose {
     )
   }
 
+  /** @internal
+   * @param {number} currentAngle
+   * @param {number} desiredAngle
+   * @returns {number}
+   * angles are in radians
+   * return value should be in range (0,100)
+   * calculations for 0 to π/2 are calculated using the following formula on Wolfram Alpha:
+   * exponential fit {0,0},{π*0.25,10},{π*0.45,50}, {π*0.5,100}
+   * calculations for π/2 to π are calculated using the following formula on Wolfram Alpha:
+   * exponential fit {π*0.5,100},{π*0.55,50}, {π*0.75,10}, {π,0}
+   * */
   _angle2percent(currentAngle, desiredAngle) {
     let translation = (Math.PI * 0.5) - desiredAngle;
     let angle = currentAngle + translation;
     if (angle <= (Math.PI * 0.5) && angle >= 0) {
-      // pi over two
-      return 5.94111 * Math.exp(angle * 1.82266);
-      // 5.94111 e ^ ( x)
+      return 0.167249 * Math.exp(angle * 4.06397);
+      // 0.167249 e^(4.06397 x)
     } else if (angle > (Math.PI * 0.5) && angle <= Math.PI) {
-      return 1822.46 * Math.exp(angle * -1.82266);
+      // 9.488988743673417*^7/E^(8.76242 x)
+      // 58634. e^(-4.06397 x)
+      return 58634 * Math.exp(angle * -4.06397);
     } else {
       return 0
     }
