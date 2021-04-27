@@ -36,6 +36,13 @@ export * from 'random-js';
 export * from 'tsparticles';
 
 import Monogatari from './monogatari';
+import { Holistic } from "@mediapipe/holistic/holistic";
+import { Camera } from "@mediapipe/camera_utils/camera_utils";
+
+Monogatari.mediapipe = {
+	'Holistic': Holistic,
+	'Camera': Camera
+}
 
 /**
  * =============================================================================
@@ -162,6 +169,8 @@ import LoadingScreen from './components/loading-screen';
 import MainMenu from './components/main-menu';
 import MainScreen from './components/main-screen';
 import MessageModal from './components/message-modal';
+import PoseDisplay from './components/pose-display';
+import PoseEditor from './components/pose-editor';
 import QuickMenu from './components/quick-menu';
 import SaveScreen from './components/save-screen';
 import SaveSlot from './components/save-slot';
@@ -189,6 +198,8 @@ Monogatari._components = [
 	MainMenu,
 	MainScreen,
 	MessageModal,
+	PoseDisplay,
+	PoseEditor,
 	QuickMenu,
 	SaveScreen,
 	SaveSlot,

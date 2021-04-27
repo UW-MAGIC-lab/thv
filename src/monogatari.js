@@ -3363,10 +3363,10 @@ Monogatari._configuration = {
 				}
 			},
 			{
-				string: 'Load',
+				string: 'PoseEditor',
 				data: {
 					action: 'open-screen',
-					open: 'load'
+					open: 'pose-editor'
 				}
 			},
 			{
