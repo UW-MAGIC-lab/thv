@@ -21,6 +21,7 @@ package-lock.json
 # Build systems
 .cache
 dist/dist
+dist/engine/core/
 
 # Other
 cache
