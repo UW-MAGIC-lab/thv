@@ -88,6 +88,7 @@ monogatari.script ({
 		'show background url("assets/scenes/new_hotness2.png")',
 		'play music MainMusic.mp3 with loop',
 		'show pose_trainer aaa',
+		'hide poser_trainer'
 	]
 	// 'Start': [
 	// 	'show scene #f7f6f6 with fadeIn',

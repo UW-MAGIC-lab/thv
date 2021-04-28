@@ -3,6 +3,17 @@ import { Action } from '../lib/Action';
 
 export class PoseTrainer extends Action {
 
+  static shouldProceed() {
+
+    return new Promise((resolve, reject) => {
+      if ($_('pose-display').collection[0].props.switchCount < 1) {
+        reject('You must finish your training!');
+      }
+
+      resolve();
+    });
+  }
+
   static onLoad() {
     if (this.engine.state('poseTrainer').length > 0) {
       const promises = [];
@@ -77,16 +88,18 @@ export class PoseTrainer extends Action {
   }
 
   /**
-   * Creates an instance of a Canvas Action
+   * Creates an instance of a PoseTrainer Action
    *
    * @param {string[]} parameters - List of parameters received from the script statement.
    * @param {string} parameters.action - In this case, action will always be 'poseTrainer'
    * @param {string} parameters.mode
    */
-  constructor([show, poseTrainer, name, separator, ...classes]) {
+
+  constructor([show, poseTrainer, name, mode, separator, ...classes]) {
     super();
 
     this.name = name;
+    this.mode = mode;
     this.conjecture = this.engine.storage().conjectures.filter(
       (conjecture) => conjecture.displayId === this.name
     );
@@ -213,20 +226,24 @@ export class PoseTrainer extends Action {
   }
 
   apply() {
-    const defaultFunction = () => Promise.resolve();
+    // const defaultFunction = () => Promise.resolve();
     this.element.setProps({
       desiredPose: {
         poseOne: this.conjecture[0].poseOne,
         poseTwo: this.conjecture[0].poseTwo
       },
       classes: [],
-      comparisonPose: "PoseOne"
+      comparisonPose: "PoseOne",
+      switchCount: 0
     });
     this.element.addEventListener('poseSwitch', (e) => {
       let poseToSwitch = this.element.props.comparisonPose === "PoseOne" ? "PoseTwo" : "PoseOne";
+      let switchCount = this.element.props.switchCount + 1;
       this.element.setProps({
-        comparisonPose: poseToSwitch
+        comparisonPose: poseToSwitch,
+        switchCount: switchCount
       });
+      this.engine.proceed(false, false, false);
     })
 
     const gameScreen = this.engine.element().find('[data-screen="game"]');
@@ -237,11 +254,11 @@ export class PoseTrainer extends Action {
 
   didApply({ updateHistory = true, updateState = true } = {}) {
     if (updateHistory === true) {
-      this.engine.history('canvas').push(this._statement);
+      this.engine.history('poseTrainer').push(this._statement);
     }
 
     if (updateState === true) {
-      this.engine.state('canvas').push(this._statement);
+      this.engine.state('poseTrainer').push(this._statement);
     }
 
     if (this.mode === 'background' || this.mode === 'character' || this.mode === 'displayable') {
@@ -275,17 +292,17 @@ export class PoseTrainer extends Action {
           const scene_state = this.engine.history('sceneState').pop();
 
           if (typeof scene_state === 'object') {
-            const state = { ...scene_state };
-            const textBox = this.engine.element().find('[data-component="text-box"]').get(0);
+            // const state = { ...scene_state };
+            // const textBox = this.engine.element().find('[data-component="text-box"]').get(0);
 
-            textBox.setProps({ mode: state.textBoxMode });
+            // textBox.setProps({ mode: state.textBoxMode });
 
-            if (state.textBoxMode === 'nvl') {
-              this.engine.global('_should_restore_nvl', true);
-            }
+            // if (state.textBoxMode === 'nvl') {
+            //   this.engine.global('_should_restore_nvl', true);
+            // }
 
-            delete state.textBoxMode;
-            this.engine.state(scene_state);
+            // delete state.textBoxMode;
+            // this.engine.state(scene_state);
           }
         }
       };
@@ -322,6 +339,6 @@ export class PoseTrainer extends Action {
   }
 }
 
-PoseTrainer.id = 'pose';
+PoseTrainer.id = 'pose-trainer';
 
 export default PoseTrainer;
