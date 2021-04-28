@@ -1,4 +1,5 @@
 import { $_ } from '@aegis-framework/artemis';
+import { FancyError } from '../lib/FancyError';
 import { Action } from '../lib/Action';
 
 export class PoseTrainer extends Action {
@@ -112,112 +113,58 @@ export class PoseTrainer extends Action {
   }
 
   willApply() {
-    // if (this.constructor._configuration.modes.indexOf(this.mode) === -1) {
-    //   FancyError.show(
-    //     `The canvas mode provided ("${this.mode}") is not valid.`,
-    //     `Monogatari attempted to show a canvas object but the mode "${this.mode}" was not found in the canvas action configuration as a valid mode.`,
-    //     {
-    //       'Mode Provided': this.mode,
-    //       'You may have meant one of these': this.constructor._configuration.modes,
-    //       'Statement': `<code class='language=javascript'>"${this._statement}"</code>`,
-    //       'Label': this.engine.state('label'),
-    //       'Step': this.engine.state('step'),
-    //       'Help': {
-    //         '_': 'Check your statement and make sure there are no typos on the mode you provided.'
-    //       }
-    //     }
-    //   );
-    //   return Promise.reject('Invalid canvas mode provided.');
-    // }
 
     // this.object = Canvas.objects(this.name);
     if (this.conjecture.length === 0) {
-      // FancyError.show(
-      //   `The conjecture with displayId of "${this.name}" was not found or is invalid`,
-      //   `Monogatari attempted to retrieve an object named "${this.name}" but it didn't exist in the saved conjectures.`,
-      //   {
-      //     'Conjecture': this.name,
-      //     'You may have meant': this.engine.storage().conjectures.map((c) => c.displayId),
-      //     'Label': this.engine.state('label'),
-      //     'Step': this.engine.state('step'),
-      //     'Help': {
-      //       '_': `
-      //         Check the conjecture\'s displayId name is correct and that you have defined it previously.
-      //         A canvas object is defined as follows:
-      //       `,
-      //       '_1': `
-			// 				<pre>
-			// 					<code class='language-javascript'>
-			// 						monogatari.storage ({
-      //               conjectures: [
-      //                 {
-      //                   id: 1,
-      //                   displayId: 'aaa',
-      //                   name: "Angle Angle Angle",
-      //                   poseOne: {
-      //                     results: {
-      //                       leftHandLandmarks: [{ x: 0.7292803525924683, y: 0.39912840723991394  ..., { x: 0.7286646962165833, y: 0.2106991410255432 }],
-      //                       rightHandLandmarks: [{ x: 0.5922070741653442, y: 0.4865525960922241 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
-      //                       faceLandmarks: [{ x: 0.5694752335548401, y: 0.1751568615436554 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
-      //                       poseLandmarks: [null, ..., { x: 0.48310595750808716, y: 1.76513671875, visibility: 0.00004400118632474914 }]
-      //                     }
-      //                   },
-      //                   poseTwo: {
-      //                     results: {
-      //                       leftHandLandmarks: [{ x: 0.7292803525924683, y: 0.39912840723991394  ..., { x: 0.7286646962165833, y: 0.2106991410255432 }],
-      //                       rightHandLandmarks: [{ x: 0.5922070741653442, y: 0.4865525960922241 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
-      //                       faceLandmarks: [{ x: 0.5694752335548401, y: 0.1751568615436554 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
-      //                       poseLandmarks: [null, ..., { x: 0.48310595750808716, y: 1.76513671875, visibility: 0.00004400118632474914 }]
-      //                     }
-      //                   }
-      //                 }
-      //               ]
-      //             })
-			// 					</code>
-			// 				</pre>
-			// 			`
-      //     }
-      //   }
-      // );
+      FancyError.show(
+        `The conjecture with displayId of "${this.name}" was not found or is invalid`,
+        `Monogatari attempted to retrieve an object named "${this.name}" but it didn't exist in the saved conjectures.`,
+        {
+          'Conjecture': this.name,
+          'You may have meant': this.engine.storage().conjectures.map((c) => c.displayId),
+          'Label': this.engine.state('label'),
+          'Step': this.engine.state('step'),
+          'Help': {
+            '_': `
+              Check the conjecture\'s displayId name is correct and that you have defined it previously.
+              A canvas object is defined as follows:
+            `,
+            '_1': `
+							<pre>
+								<code class='language-javascript'>
+									monogatari.storage ({
+                    conjectures: [
+                      {
+                        id: 1,
+                        displayId: 'aaa',
+                        name: "Angle Angle Angle",
+                        poseOne: {
+                          results: {
+                            leftHandLandmarks: [{ x: 0.7292803525924683, y: 0.39912840723991394  ..., { x: 0.7286646962165833, y: 0.2106991410255432 }],
+                            rightHandLandmarks: [{ x: 0.5922070741653442, y: 0.4865525960922241 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
+                            faceLandmarks: [{ x: 0.5694752335548401, y: 0.1751568615436554 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
+                            poseLandmarks: [null, ..., { x: 0.48310595750808716, y: 1.76513671875, visibility: 0.00004400118632474914 }]
+                          }
+                        },
+                        poseTwo: {
+                          results: {
+                            leftHandLandmarks: [{ x: 0.7292803525924683, y: 0.39912840723991394  ..., { x: 0.7286646962165833, y: 0.2106991410255432 }],
+                            rightHandLandmarks: [{ x: 0.5922070741653442, y: 0.4865525960922241 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
+                            faceLandmarks: [{ x: 0.5694752335548401, y: 0.1751568615436554 }, ..., { x: 0.669626772403717, y: 0.41053521633148193 }],
+                            poseLandmarks: [null, ..., { x: 0.48310595750808716, y: 1.76513671875, visibility: 0.00004400118632474914 }]
+                          }
+                        }
+                      }
+                    ]
+                  })
+								</code>
+							</pre>
+						`
+          }
+        }
+      );
       return Promise.reject('Canvas object did not exist or is invalid');
     }
-    // if (typeof this.object !== 'object') {
-    //   FancyError.show(
-    //     `The canvas object "${this.name}" was not found or is invalid`,
-    //     `Monogatari attempted to retrieve an object named "${this.name}" but it didn't exist in the canvas objects.`,
-    //     {
-    //       'Canvas': this.name,
-    //       'You may have meant': Object.keys(Canvas.objects()),
-    //       'Label': this.engine.state('label'),
-    //       'Step': this.engine.state('step'),
-    //       'Help': {
-    //         '_': 'Check the object\'s name is correct and that you have defined it previously. A canvas object is defined as follows:',
-    //         '_1': `
-		// 					<pre>
-		// 						<code class='language-javascript'>
-		// 							this.engine.action ('Canvas').objects ({
-		// 								stars: {
-		// 									start: () => {},
-		// 									stop: () => {},
-		// 									restart: () => {},
-		// 									layers: [],
-		// 									state: {},
-		// 									props: {}
-		// 								}
-		// 							});
-		// 						</code>
-		// 					</pre>
-		// 				`,
-    //         '_2': 'Notice the object defined uses a name or an id, in this case it was set to "stars" and to show it, you must use that exact name:',
-    //         '_3': `
-		// 					<pre><code class='language-javascript'>"show canvas stars background"</code></pre>
-		// 				`
-    //       }
-    //     }
-    //   );
-
-    //   return Promise.reject('Canvas object did not exist or is invalid');
-    // }
     this.element = document.createElement('pose-display');
 
     this.containerSelector = `[data-component="pose-display"][pose-display="${this.name}"][mode="${this.mode}"]`;
