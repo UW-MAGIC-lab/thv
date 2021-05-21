@@ -4,14 +4,20 @@ import { Action } from '../lib/Action';
 
 export class PoseTrainer extends Action {
 
+  static matchString([show, type]) {
+    return show === 'show' && type === 'pose_trainer';
+  }
+
   static shouldProceed() {
 
     return new Promise((resolve, reject) => {
-      if ($_('pose-display').collection[0].props.switchCount < 1) {
-        reject('You must finish your training!');
-      }
+      // if ($_('pose-display').collection[0]) {
+      //   if ($_('pose-display').collection[0].props.switchCount < 1) {
+      //     reject('You must finish your training!');
+      //   }
+      // }
 
-      resolve();
+      resolve({ advance: true });
     });
   }
 
@@ -69,10 +75,6 @@ export class PoseTrainer extends Action {
     });
 
     return Promise.all(promises);
-  }
-
-  static matchString([show, type]) {
-    return show === 'show' && type === 'pose_trainer';
   }
 
   // TODO: implement this
@@ -190,12 +192,19 @@ export class PoseTrainer extends Action {
         comparisonPose: poseToSwitch,
         switchCount: switchCount
       });
-      this.engine.proceed(false, false, false);
+      // TODO: remove
+      this.engine.proceed({ userInitiated: true, skip: false, autoPlay: false });
+      // this.engine.proceed({ userInitiated: false, skip: false, autoPlay: false });
     })
-
     const gameScreen = this.engine.element().find('[data-screen="game"]');
     gameScreen.find('[data-ui="background"]').append(this.element);
-
+    document.addEventListener('keydown', function(e) {
+      if (e.code === "KeyN") {
+        debugger;
+        this.engine.proceed({ userInitiated: true, skip: false, autoPlay: false });
+      }
+    }.bind(this))
+    this.engine.element().find('[data-component="text-box"]').hide()
     return Promise.resolve();
   }
 
@@ -286,6 +295,6 @@ export class PoseTrainer extends Action {
   }
 }
 
-PoseTrainer.id = 'pose-trainer';
+PoseTrainer.id = 'PoseTrainer';
 
 export default PoseTrainer;

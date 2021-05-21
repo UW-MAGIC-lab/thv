@@ -30,9 +30,15 @@ const { $_ready, $_ } = Monogatari;
 
 $_ready (() => {
 	// 2. Inside the $_ready function:
+	// faceDetection = new FaceDetection({
+	// 	locateFile: (path, base) => {
+	// 		return `base/node_modules/@mediapipe/face_detection/${path}`;
+	// 	}
+	// });
 	const holistic = new monogatari.mediapipe.Holistic({
 		locateFile: (file) => {
-			return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.1.1617147418/${file}`;
+			// return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
+			return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.3.1620080860/${file}`;
 		}
 	});
 	holistic.setOptions({

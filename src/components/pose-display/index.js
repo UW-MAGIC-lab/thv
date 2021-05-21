@@ -98,7 +98,9 @@ class PoseDisplay extends Component {
       if (this.props.comparisonPose === "PoseOne") {
         comparisonPose = new Pose(this.currentPose, poseOne.comparisonBodySegments)
         comparisonPose.drawFullBody(context, { color: RED, lineWidth: 3 }, playerCanvas);
-        if (comparisonPose.fullyMatched()) { this.dispatchEvent(poseSwitchEvent) }
+        if (comparisonPose.fullyMatched()) {
+          this.dispatchEvent(poseSwitchEvent)
+        }
       } else if (this.props.comparisonPose === "PoseTwo") {
         comparisonPose = new Pose(this.currentPose, poseTwo.comparisonBodySegments)
         comparisonPose.drawFullBody(context, { color: RED, lineWidth: 3 }, playerCanvas);

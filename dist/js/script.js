@@ -78,6 +78,13 @@ monogatari.characters ({
 	'y': {
 		name: 'Yui',
 		color: '#5bcaff'
+	},
+	'e': {
+		name: "Elder",
+		color: '#5bcaff',
+		sprites: {
+			elder: 'Elder.png'
+		}
 	}
 });
 
@@ -85,10 +92,21 @@ monogatari.script ({
 	// The game starts here.
 	'Start': [
 		'show scene #f7f6f6 with fadeIn',
-		'show background url("assets/scenes/new_hotness2.png")',
+		'show background url("assets/scenes/blue_background.png")',
 		'play music MainMusic.mp3 with loop',
+		'Stars zoom past your ship as you make your way through space. Navigating the stars is difficult, but you are an experienced pilot.',
+		'Suddenly, alarm bells begin to clang throughout the cabin. Something begins pulling your ship off course!',
+		'You jump to your feet to rush to the controls, but you are thrown to the floor and your vision goes black.',
+		'show background url("assets/scenes/SnowyForest_b_02.png")',
+		'When you regain consciousness, your eyes open to see an alien planet. Stumbling through the dense forest, you notice a golden light illuminating a path through the forest.',
+		'You follow the shimmering light until you reach clearing, and notice a strange being is standing in the open.',
+		'show character e elder at right',
+		'e You crashed here?',
+		"You nod.",
+		"e Let us help you.",
+		'hide character e',
 		'show pose_trainer aaa',
-		'hide poser_trainer'
+		// 'hide poser_trainer'
 	]
 	// 'Start': [
 	// 	'show scene #f7f6f6 with fadeIn',
