@@ -8,12 +8,11 @@ export class HidePoseTrainer extends Action {
 		return hide === 'hide' && type === 'pose_trainer';
 	}
 
-	constructor([hide, poseTrainer, name, separator, ...classes ]) {
+	constructor([hide, poseTrainer, separator, ...classes ]) {
 		super ();
 
-		this.name = name;
 
-		this.element = document.querySelector(`[data-component="pose-display"][pose-display="${this.name}"]`);
+		this.element = document.querySelector(`[data-component="pose-display"]`);
 
 		if (typeof classes !== 'undefined') {
 			this.classes = classes;
@@ -23,24 +22,19 @@ export class HidePoseTrainer extends Action {
 	}
 
 	apply () {
-		const { object } = this.element.props;
-
-		return Util.callAsync (object.stop, this.engine, this.element.layers, object.props, object.state, this.element).then (() => {
-			this.engine.element ().find (`[data-component="canvas-container"][canvas="${this.name}"]`).remove ();
-			return Promise.resolve ();
-		});
+		this.element.remove ();
+		return Promise.resolve ();
 	}
 
 	didApply () {
-		debugger;
-		for (let i = this.engine.state ('canvas').length - 1; i >= 0; i--) {
-			const last = this.engine.state ('canvas')[i];
-			const [show, canvas, name, mode] = last.split (' ');
-			if (name === this.name) {
-				this.engine.state ('canvas').splice (i, 1);
-				break;
-			}
-		}
+		// for (let i = this.engine.state ('canvas').length - 1; i >= 0; i--) {
+		// 	const last = this.engine.state ('canvas')[i];
+		// 	const [show, canvas, name, mode] = last.split (' ');
+		// 	if (name === this.name) {
+		// 		this.engine.state ('canvas').splice (i, 1);
+		// 		break;
+		// 	}
+		// }
 		return Promise.resolve ({ advance: true });
 	}
 

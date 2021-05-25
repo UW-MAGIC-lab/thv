@@ -2067,7 +2067,7 @@ class Monogatari {
 			return this.willProceed ().then (() => {
 				return this.next ();
 			});
-		});
+		})
 	}
 
 	static rollback () {
@@ -2151,7 +2151,6 @@ class Monogatari {
 			}
 
 			this.debug.debug ('Checking Extra Conditions');
-
 			return Promise.all (promises).then ((...args) => {
 				this.debug.groupEnd ();
 				return Promise.resolve (...args);
@@ -2647,6 +2646,18 @@ class Monogatari {
 						this.skip (false);
 					} else {
 						this.skip (true);
+					}
+				}
+			}
+		});
+
+		this.registerListener('next', {
+			keys: 'n',
+			callback: () => {
+				if (this.global('playing')) {
+					if (this.element().find(`[data-component="pose-display"]`)) {
+						this.global('skip-training', true);
+						this.proceed({ userInitiated: true, skip: false, autoPlay: false });
 					}
 				}
 			}

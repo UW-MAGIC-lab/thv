@@ -9,15 +9,16 @@ export class PoseTrainer extends Action {
   }
 
   static shouldProceed() {
-
     return new Promise((resolve, reject) => {
-      // if ($_('pose-display').collection[0]) {
-      //   if ($_('pose-display').collection[0].props.switchCount < 1) {
-      //     reject('You must finish your training!');
-      //   }
-      // }
+      if ($_('pose-display').collection[0]) {
+        if (!this.engine.global('skip-training') &&
+          $_('pose-display').collection[0].props.switchCount < 1) {
+          reject('You must finish your training!');
+        }
+      }
 
-      resolve({ advance: true });
+      this.engine.global('skip-training', false)
+      resolve();
     });
   }
 
@@ -175,7 +176,6 @@ export class PoseTrainer extends Action {
   }
 
   apply() {
-    // const defaultFunction = () => Promise.resolve();
     this.element.setProps({
       desiredPose: {
         poseOne: this.conjecture[0].poseOne,
@@ -183,7 +183,7 @@ export class PoseTrainer extends Action {
       },
       classes: [],
       comparisonPose: "PoseOne",
-      switchCount: 0
+      switchCount: 0,
     });
     this.element.addEventListener('poseSwitch', (e) => {
       let poseToSwitch = this.element.props.comparisonPose === "PoseOne" ? "PoseTwo" : "PoseOne";
@@ -192,18 +192,12 @@ export class PoseTrainer extends Action {
         comparisonPose: poseToSwitch,
         switchCount: switchCount
       });
-      // TODO: remove
-      this.engine.proceed({ userInitiated: true, skip: false, autoPlay: false });
+      // // TODO: remove
+      // this.engine.proceed({ userInitiated: true, skip: false, autoPlay: false });
       // this.engine.proceed({ userInitiated: false, skip: false, autoPlay: false });
     })
     const gameScreen = this.engine.element().find('[data-screen="game"]');
     gameScreen.find('[data-ui="background"]').append(this.element);
-    document.addEventListener('keydown', function(e) {
-      if (e.code === "KeyN") {
-        debugger;
-        this.engine.proceed({ userInitiated: true, skip: false, autoPlay: false });
-      }
-    }.bind(this))
     this.engine.element().find('[data-component="text-box"]').hide()
     return Promise.resolve();
   }
@@ -216,11 +210,7 @@ export class PoseTrainer extends Action {
     if (updateState === true) {
       this.engine.state('poseTrainer').push(this._statement);
     }
-
-    if (this.mode === 'background' || this.mode === 'character' || this.mode === 'displayable') {
-      return Promise.resolve({ advance: true });
-    }
-
+    this.engine.global('_engine_block', true);
     return Promise.resolve({ advance: false });
   }
 
