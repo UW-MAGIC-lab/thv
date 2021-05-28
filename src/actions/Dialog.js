@@ -421,6 +421,9 @@ export class Dialog extends Action {
 
 	didApply () {
 		this.engine.global ('_dialog_pending_revert', true);
+		if (this.dialog === "") {
+			return Promise.resolve({ advance: true, step: true });
+		}
 		return Promise.resolve ({ advance: false });
 	}
 
