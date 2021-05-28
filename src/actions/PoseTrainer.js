@@ -191,8 +191,6 @@ export class PoseTrainer extends Action {
         comparisonPose: poseToSwitch,
         switchCount: switchCount
       });
-      // // TODO: remove
-      // this.engine.proceed({ userInitiated: true, skip: false, autoPlay: false });
       this.engine.proceed({ userInitiated: false, skip: false, autoPlay: false });
     })
     const gameScreen = this.engine.element().find('[data-screen="game"]');
