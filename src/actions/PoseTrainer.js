@@ -12,7 +12,7 @@ export class PoseTrainer extends Action {
     return new Promise((resolve, reject) => {
       if ($_('pose-display').collection[0]) {
         if (!this.engine.global('skip-training') &&
-          $_('pose-display').collection[0].props.switchCount < 1) {
+          $_('pose-display').collection[0].props.switchCount < 4) {
           reject('You must finish your training!');
         }
       }
@@ -117,7 +117,6 @@ export class PoseTrainer extends Action {
 
   willApply() {
 
-    // this.object = Canvas.objects(this.name);
     if (this.conjecture.length === 0) {
       FancyError.show(
         `The conjecture with displayId of "${this.name}" was not found or is invalid`,
@@ -194,7 +193,7 @@ export class PoseTrainer extends Action {
       });
       // // TODO: remove
       // this.engine.proceed({ userInitiated: true, skip: false, autoPlay: false });
-      // this.engine.proceed({ userInitiated: false, skip: false, autoPlay: false });
+      this.engine.proceed({ userInitiated: false, skip: false, autoPlay: false });
     })
     const gameScreen = this.engine.element().find('[data-screen="game"]');
     gameScreen.find('[data-ui="background"]').append(this.element);

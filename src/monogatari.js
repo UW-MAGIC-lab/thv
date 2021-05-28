@@ -3250,7 +3250,7 @@ Monogatari._settings = {
 	'ForceAspectRatio': 'None',
 
 	// Enables or disables the typing text animation for the whole game.
-	'TypeAnimation': true,
+	'TypeAnimation': false,
 
 	// Enables or disables the typing text animation in NVL dialogs for the
 	// whole game.

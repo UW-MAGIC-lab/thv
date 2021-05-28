@@ -115,37 +115,32 @@ monogatari.script ({
 		`Explain why the statement is <strong>always true</strong> or is <strong>false</strong>.<br>
 		Speak your answers out loud as we voice record your voice:<br><br><br>
 		<strong>The diagonals of a rectangle always have the same length</strong>`,
+		'centered <strong>The diagonals of a rectangle always have the same length.</strong>',
 		'centered',
 		{
 			'Choice': {
-				// 'Dialog': 'The diagonals of a rectangle always have the same length.',
 				'A': {
 					'Text': 'FALSE: Since a rectangle has shorter sides and longer sides, the diagonals will not be the same length.',
-					'Do': 'jump Incorrect'
+					'Do': 'jump Ending'
 				},
 				'B': {
 					'Text': 'TRUE: Each diagonal divides any quadrilateral into two triangles that are the same.',
-					'Do': 'jump Correct'
+					'Do': 'jump Ending'
 				},
 				'C': {
 					'Text': 'FALSE: Only a square has diagonals that are the same length.',
-					'Do': 'jump Correct'
+					'Do': 'jump Ending'
 				},
 				'D': {
 					'Text': 'TRUE: Opposite sides of a rectangle are the same, so the right triangles formed by the diagonals have matching lengths for each of their side.',
-					'Do': 'jump Incorrect'
+					'Do': 'jump Ending'
 				}
 			}
 		}
 	],
-	'Correct': [
+	'Ending': [
 		'show character e',
-		'e Correct!',
-		'end'
-	],
-	'Incorrect': [
-		'show character e',
-		`e I'm sorry, that wasn't quite correct`,
+		'e Thank you for playing the prototype of THV-Online! We look forward to keeping you updated on improvements as they get developed.',
 		'end'
 	]
 
