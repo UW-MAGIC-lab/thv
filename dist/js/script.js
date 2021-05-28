@@ -115,7 +115,6 @@ monogatari.script ({
 		`Explain why the statement is <strong>always true</strong> or is <strong>false</strong>.<br>
 		Speak your answers out loud as we voice record your voice:<br><br><br>
 		<strong>The diagonals of a rectangle always have the same length</strong>`,
-		'centered <strong>The diagonals of a rectangle always have the same length.</strong>',
 		'centered',
 		{
 			'Choice': {
@@ -139,7 +138,7 @@ monogatari.script ({
 		}
 	],
 	'Ending': [
-		'show character e',
+		'show character e elder at right',
 		'e Thank you for playing the prototype of THV-Online! We look forward to keeping you updated on improvements as they get developed.',
 		'end'
 	]
