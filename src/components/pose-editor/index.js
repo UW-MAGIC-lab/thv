@@ -51,7 +51,7 @@ class PoseEditor extends ScreenComponent {
     // component and also on the child component
     // This is a hacky way to get one directional state management, but yolo
     this.engine.on('click', '[data-action="capture-pose"]', function (event) {
-      let counter = 3
+      let counter = 10
       let setPose = props.setPose
       let poseToSet = props.poseToSet
       let poseDisplay  = props.poseDisplay
