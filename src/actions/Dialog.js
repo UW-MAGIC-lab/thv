@@ -238,7 +238,6 @@ export class Dialog extends Action {
 				this.engine.trigger ('didFinishTyping');
 			}
 		});
-
 		return Promise.resolve ();
 	}
 

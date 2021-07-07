@@ -39,7 +39,8 @@ class PoseEditor extends ScreenComponent {
         counter: props.counter,
         setPose: props.setPose,
         countdownID: props.countdownID,
-        poseToSet: props.poseToSet
+        poseToSet: props.poseToSet,
+        scene: 'pose-editor'
       })
       $_('[data-component="display-container"]').append(display)
       self.setProps({
@@ -87,6 +88,28 @@ class PoseEditor extends ScreenComponent {
       }, 1000);
     }, false);
 
+    this.engine.on('click', '[data-action="capture-and-export"]', (event) => {
+      let counter = 10
+      let poseDisplay = props.poseDisplay
+      let countdownID = setInterval(() => {
+
+        if (counter < 0) {
+          clearInterval(countdownID);
+          poseDisplay.setProps({capture:false});
+
+          counter = null;
+          countdownID = null;
+          this.engine.db.exportAndDownload(results);
+        }
+        poseDisplay.setProps({
+          counter: counter,
+          countdownID: countdownID,
+          capture: true
+        })
+        counter--;
+      }, 1000);
+    }, false);
+
     this.engine.on('click', '[data-action="save-poses"]', function (e) {
       let flash = $_('#save-message');
       flash.toggleClass('hidden')
@@ -125,6 +148,7 @@ class PoseEditor extends ScreenComponent {
       <div class="row hidden" id="editor-actions">
         <button data-action="capture-pose">Capture Pose</button>
         <button data-action="save-poses">Save Poses</button>
+        <button data-action="capture-and-export">Demo Data Capture</button>
         <button data-action="return-to-menu">Return To Conjectures</button>
       </div>
       <div class="hidden row" id="save-message">

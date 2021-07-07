@@ -2,6 +2,8 @@ import { Component } from '../../lib/Component';
 import { DrawingArea, selectedPose, bodyTooClose, drawProximityWarning, colWiseAverage } from "../../lib/editor_utils.js";
 import { Pose } from "../../lib/Pose.js";
 
+
+
 const RED = "#FF0000";
 const SMOOTHING = false;
 
@@ -38,6 +40,9 @@ class PoseDisplay extends Component {
     }
 
     return (results) => {
+      if (this.props.capture) {
+        this.engine.db.addClickstreamData(this.props.scene);
+      }
       if (SMOOTHING) {
         if (this.recentPoses.length < 10) {
           this.recentPoses.push(results);

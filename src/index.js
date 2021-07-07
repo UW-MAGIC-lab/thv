@@ -44,6 +44,10 @@ Monogatari.mediapipe = {
 	'Camera': Camera
 }
 
+import {Database} from './lib/Database.js';
+
+Monogatari.db = new Database();
+
 /**
  * =============================================================================
  * Translations

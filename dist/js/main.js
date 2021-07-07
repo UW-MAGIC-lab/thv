@@ -30,10 +30,7 @@ const { $_ready, $_ } = Monogatari;
 
 $_ready (() => {
 	// 2. Inside the $_ready function:
-	// monogatari.db = new Dexie("thv_o");
-	// monogatari.db.version(1).stores({
-	// 	results: '++id,scene'
-	// });
+	monogatari.db.clickstream.toCollection().delete();
 
 	const holistic = new monogatari.mediapipe.Holistic({
 		locateFile: (file) => {
