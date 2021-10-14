@@ -1,0 +1,19 @@
+svg-connectors {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+
+  path {
+    stroke: #bdc1c6;
+    fill: transparent;
+    stroke-width: 2px;
+  }
+}

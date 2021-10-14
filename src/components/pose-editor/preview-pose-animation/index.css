@@ -1,0 +1,6 @@
+preview-pose-animation {
+  .disabled {
+    cursor: not-allowed;
+  }
+
+}

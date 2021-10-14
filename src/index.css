@@ -41,6 +41,9 @@
 @import './components/main-menu/index.css';
 @import './components/main-screen/index.css';
 @import './components/message-modal/index.css';
+@import './components/model-loader/index.css';
+@import './components/model-trainer/index.css';
+@import './components/pose-capture/index.css';
 @import './components/pose-display/index.css';
 @import './components/pose-editor/index.css';
 @import './components/quick-menu/index.css';
@@ -48,6 +51,7 @@
 @import './components/save-slot/index.css';
 @import './components/settings-screen/index.css';
 @import './components/slot-container/index.css';
+@import './components/svg-connectors/index.css';
 @import './components/text-box/index.css';
 @import './components/text-input/index.css';
 @import './components/timer-display/index.css';

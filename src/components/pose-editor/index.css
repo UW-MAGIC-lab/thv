@@ -1,8 +1,8 @@
 /**
- * ===========================
- * Pose Editor Menu Component
- * ===========================
- */
+* ===========================
+* Pose Editor Menu Component
+* ===========================
+*/
 
 pose-editor {
 
@@ -13,4 +13,84 @@ pose-editor {
   .hidden {
     display: none !important;
   }
+
+  .disabled-btn {
+    cursor: not-allowed !important;
+    opacity: 0.33;
+  }
+
+  .button {
+    cursor: pointer;
+    padding: 12px;
+    min-width: 200px;
+    margin: 32px;
+    background: #174ea6;
+    color: white;
+    border-radius: 4px;
+  }
+
+  .capture-container {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .preview-container {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    justify-content: center;
+  }
+
+  .trainer-container {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    justify-content: center;
+  }
+
+  .model-trainer {
+    display: flex;
+    flex-direction:row;
+  }
+
+  .card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 20%);
+    margin-bottom: 30px;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+
+  #popup {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100vw;
+    height:100vh;
+    background:rgba(0,0,0,0.75);
+    display:none;
+  }
+  #popup .popup-content {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width: 60vw;
+    padding:10px 20px;
+    background:#eee;
+  }
+  #popup a.close-popup {
+    position:absolute;
+    top:20px;
+    right:20px;
+    font-size:20px;
+    font-weight:600;
+    text-decoration:none;
+  }
+  #popup:target {
+    display:block;
+  }
+
 }

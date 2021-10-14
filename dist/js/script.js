@@ -80,7 +80,6 @@ monogatari.characters ({
 		color: '#5bcaff'
 	}
 });
-
 monogatari.script ({
 	// The game starts here.
 	'Start': [

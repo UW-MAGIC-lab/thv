@@ -1,10 +1,14 @@
 const RED = "#FF0000";
-import {  FACEMESH_TESSELATION, HAND_CONNECTIONS, FULL_BODY_CONNECTIONS, POSE_CONNECTIONS } from './constants';
+// import { FULL_BODY_CONNECTIONS, POSE_CONNECTIONS } from './constants';
+import { FULL_BODY_CONNECTIONS } from './constants';
+import { HAND_CONNECTIONS, FACEMESH_FACE_OVAL, POSE_CONNECTIONS, POSE_LANDMARKS } from '@mediapipe/holistic';
+
 
 export class Pose {
   constructor(results, desiredPoseSet) {
     this.results = results;
     this.desiredPoseSet = desiredPoseSet;
+    this.poseLandmarks = this.getPoseLandmarks();
   }
   static displayName = "Pose";
   static rightForearmConnections = [[13, 15]];
@@ -12,12 +16,72 @@ export class Pose {
   static leftForearmConnections = [[14, 16]];
   static leftUpperarmConnections = [[12, 14]];
 
+  getPoseLandmarks() {
+    let lhLandmarks, rhLandmarks, poseLandmarks;
+    let landmarkCoordinates = (landmark) => {
+      if (landmark) {
+        return [landmark.x, landmark.y];
+      }
+      // only include landmarks that have a high enough visibility
+      // return landmark.visibility > 0.65 ? [landmark.x, landmark.y] : [null, null];
+    }
+    if (this.results.leftHandLandmarks) {
+      lhLandmarks = Object.values(this.results.leftHandLandmarks).map(landmarkCoordinates)
+    } else {
+      lhLandmarks = new Array(42).fill(null) // x,y coordinates for 21 hand landmarks
+    }
+    if (this.results.rightHandLandmarks) {
+      rhLandmarks = Object.values(this.results.rightHandLandmarks).map(landmarkCoordinates)
+    } else {
+      rhLandmarks = new Array(42).fill(null) // x,y coordinates for 21 hand landmarks
+    }
+    if (this.results.poseLandmarks) {
+      poseLandmarks = Object.values(this.results.poseLandmarks).map(landmarkCoordinates)
+    } else {
+      poseLandmarks = new Array(66).fill(null) // x,y coordinates for 33 pose landmarks
+    }
+    return [ poseLandmarks, lhLandmarks, rhLandmarks ].flat(4);
+  }
+
+  _drawForearms(context, drawingSpec, canvasSpec) {
+    let landmarks;
+    if (this.results.poseLandmarks) {
+      if (this.results.rightHandLandmarks) {
+        landmarks = [this.results.poseLandmarks[POSE_LANDMARKS.RIGHT_ELBOW], this.results.rightHandLandmarks[0]];
+        this._drawConnectors(
+          context,
+          landmarks,
+          [[0,1]],
+          drawingSpec,
+          canvasSpec,
+          false
+        )
+      }
+      if (this.results.leftHandLandmarks) {
+        landmarks = [this.results.poseLandmarks[POSE_LANDMARKS.LEFT_ELBOW], this.results.leftHandLandmarks[0]];
+        this._drawConnectors(
+          context,
+          landmarks,
+          [[0, 1]],
+          drawingSpec,
+          canvasSpec,
+          false
+        )
+      }
+    }
+  }
+
 
   drawFullBody(context, drawingSpec, canvasSpec) {
-    this._drawConnectors(context, this.results.faceLandmarks, FACEMESH_TESSELATION, { color: RED, lineWidth: 1 }, canvasSpec, false);
+    // Connect elbows to hands. Do this first so that the other graphics will draw
+    // on top of these marks.
+    this._drawForearms(context, drawingSpec, canvasSpec);
+    this._drawConnectors(context, this.results.faceLandmarks, FACEMESH_FACE_OVAL, { color: RED, lineWidth: 2 }, canvasSpec, false);
+    this._removeArmLandmarks(this._removeFeetLandmarks(this._removeHeadLandmarks(this.results.poseLandmarks)));
     this._drawConnectors(context, this.results.leftHandLandmarks, HAND_CONNECTIONS, drawingSpec, canvasSpec, true);
     this._drawConnectors(context, this.results.rightHandLandmarks, HAND_CONNECTIONS, drawingSpec, canvasSpec, true);
-    this._removeFeetLandmarks(this._removeHeadLandmarks(this.results.poseLandmarks));
+    this._drawConnectors(context, this.results.poseLandmarks, POSE_CONNECTIONS, drawingSpec, canvasSpec, true);
+
     if (this.desiredPoseSet) {
       this._drawConnectors(context, this.results.poseLandmarks, FULL_BODY_CONNECTIONS, drawingSpec, canvasSpec, true);
 
@@ -30,9 +94,31 @@ export class Pose {
       drawingSpec.color = this._bodySegmentColor(this._leftShoulder, this.desiredPoseSet.leftShoulder);
       this._drawConnectors(context, this.results.poseLandmarks, Pose.leftUpperarmConnections, drawingSpec, canvasSpec, true);
     } else {
-      this._drawConnectors(context, this.results.poseLandmarks, POSE_CONNECTIONS, drawingSpec, canvasSpec, true);
+      // this._drawConnectors(context, this.results.poseLandmarks, POSE_CONNECTIONS, drawingSpec, canvasSpec, true);
     }
   }
+
+//   function connect(
+//     ctx: CanvasRenderingContext2D,
+//     connectors:
+//       Array<[mpHolistic.NormalizedLandmark, mpHolistic.NormalizedLandmark]>):
+//   void {
+//   const canvas = ctx.canvas;
+//   for (const connector of connectors) {
+//     const from = connector[0];
+//     const to = connector[1];
+//     if (from && to) {
+//       if (from.visibility && to.visibility &&
+//         (from.visibility < 0.1 || to.visibility < 0.1)) {
+//         continue;
+//       }
+//       ctx.beginPath();
+//       ctx.moveTo(from.x * canvas.width, from.y * canvas.height);
+//       ctx.lineTo(to.x * canvas.width, to.y * canvas.height);
+//       ctx.stroke();
+//     }
+//   }
+// }
 
   _drawConnectors(context, landmarks, landmarkConnections, drawingSpec, canvasSpec, sketchEffect) {
     let strokeStyle = context.strokeStyle;
@@ -60,7 +146,7 @@ export class Pose {
             context.lineWidth = drawingSpec.lineWidth
             context.moveTo(startingLandmarkX, startingLandmarkY);
             context.lineTo(finishingLandmarkX, finishingLandmarkY);
-            if (sketchEffect) {
+            if (false) {
               context.moveTo(startingLandmarkX - this._getRandomInt(1, 3), startingLandmarkY - this._getRandomInt(1, 3));
               context.lineTo(finishingLandmarkX - this._getRandomInt(1, 3), finishingLandmarkY - this._getRandomInt(1, 3));
               context.moveTo(startingLandmarkX + this._getRandomInt(1, 3), startingLandmarkY + this._getRandomInt(1, 3));
@@ -111,10 +197,10 @@ export class Pose {
   }
 
   _removeArmLandmarks(landmarks) {
-    this._removeElements(landmarks, [
+    this._removeElements(landmarks, [POSE_LANDMARKS.RIGHT_WRIST, POSE_LANDMARKS.LEFT_WRIST])
       // 14,16, // left arm
       // 13, 15 // right arm
-    ])
+    // ])
     return landmarks;
   }
 
@@ -238,7 +324,9 @@ export class Pose {
 
   _removeElements(landmarks, elements) {
     for (const element of elements) {
-      delete landmarks[element];
+      if (landmarks && landmarks[element]) {
+        delete landmarks[element];
+      }
     }
   }
 }

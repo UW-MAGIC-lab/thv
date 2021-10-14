@@ -149,10 +149,10 @@ class PoseDisplay extends Component {
     let canvas = this.children[0];
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
-    this.engine.holistic.setOptions({
-      selfieMode: true,
-      maxNumHolistic: 2
-    })
+    // this.engine.holistic.setOptions({
+    //   selfieMode: true,
+    //   maxNumHolistic: 2
+    // })
     this.engine.holistic.onResults(this.paint(canvas));
 
     return Promise.resolve();

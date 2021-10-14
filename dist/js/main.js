@@ -29,30 +29,41 @@ const { $_ready, $_ } = Monogatari;
 
 
 $_ready (() => {
+	window.loadedModels = false;
 	// 2. Inside the $_ready function:
 	const holistic = new monogatari.mediapipe.Holistic({
 		locateFile: (file) => {
-			return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.1.1617147418/${file}`;
+			// console.log('Holistic', 'loading', file);
+			// return `assets/models/mediapipe/${file}`;
+			return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.4.1626821983/${file}`;
 		}
-	});
+	})
 	holistic.setOptions({
-		upperBodyOnly: false,
 		smoothLandmarks: true,
 		minDetectionConfidence: 0.5,
-		minTrackingConfidence: 0.5
+		minTrackingConfidence: 0.5,
+		modelComplexity: 1,
+		selfieMode: true
 	});
 	const videoElement = document.getElementsByClassName('input_video')[0];
 	monogatari.holistic = holistic;
-	// monogatari.holistic.send();
-	const camera = new monogatari.mediapipe.Camera(videoElement, {
-		onFrame: async () => {
-			await monogatari.holistic.send({ image: videoElement });
-		},
+
+	async function poseDetectionFrame() {
+		await monogatari.holistic.send({ image: videoElement });
+		if (!window.loadedModels) {
+			console.log('loading')
+			$_("model-loader").collection[0].style.display = "none"
+			window.loadedModels = true;
+		}
+	}
+	monogatari.mediapipe.camera = new monogatari.mediapipe.Camera(videoElement, {
+		onFrame: poseDetectionFrame,
 		width: window.innerWidth,
 		height: window.innerHeight,
 		facingMode: 'user'
 	});
-	camera.start();
+	monogatari.mediapipe.camera.start()
+	monogatari.debug.level(5);
 
 	monogatari.init ('#monogatari').then (() => {
 		// 3. Inside the init function:
@@ -61,6 +72,5 @@ $_ready (() => {
 
 		// This will disable the left key listener to roll back
 		monogatari.unregisterListener('back');
-
 	});
 });

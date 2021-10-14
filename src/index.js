@@ -169,19 +169,27 @@ import LoadingScreen from './components/loading-screen';
 import MainMenu from './components/main-menu';
 import MainScreen from './components/main-screen';
 import MessageModal from './components/message-modal';
+import ModelLoader from './components/model-loader';
+import ModelTrainer from './components/model-trainer';
 import PoseDisplay from './components/pose-display';
-import PoseEditor from './components/pose-editor';
+import {PoseEditor} from './components/pose-editor';
+import AddPose from './components/pose-editor/add-pose';
+import PoseCapture from './components/pose-editor/pose-capture';
+import PoseSample from './components/pose-editor/pose-sample';
+import PreviewPoseAnimation from './components/pose-editor/preview-pose-animation';
 import QuickMenu from './components/quick-menu';
 import SaveScreen from './components/save-screen';
 import SaveSlot from './components/save-slot';
 import SettingsScreen from './components/settings-screen';
 import SlotContainer from './components/slot-container';
+import SVGConnectors from './components/svg-connectors';
 import TextBox from './components/text-box';
 import TextInput from './components/text-input';
 import TimerDisplay from './components/timer-display';
 import VisualNovel from './components/visual-novel';
 
 Monogatari._components = [
+	AddPose,
 	AlertModal,
 	CanvasContainer,
 	CenteredDialog,
@@ -198,13 +206,19 @@ Monogatari._components = [
 	MainMenu,
 	MainScreen,
 	MessageModal,
+	ModelLoader,
+	ModelTrainer,
+	PoseSample,
+	PoseCapture,
 	PoseDisplay,
 	PoseEditor,
+	PreviewPoseAnimation,
 	QuickMenu,
 	SaveScreen,
 	SaveSlot,
 	SettingsScreen,
 	SlotContainer,
+	SVGConnectors,
 	TextBox,
 	TextInput,
 	TimerDisplay,

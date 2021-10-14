@@ -1,0 +1,45 @@
+model-trainer {
+
+  .loading {
+
+  }
+
+  .train-model-btn {
+    cursor: pointer;
+    padding: 12px;
+    min-width: 200px;
+    margin: 32px;
+    background: #174ea6;
+    color: white;
+    border-radius: 4px;
+  }
+
+  .disabled {
+    cursor: not-allowed !important;
+    opacity: 0.33;
+  }
+
+  .hidden{
+    display: none;
+  }
+
+  progress {
+    border-radius: 4px;
+  }
+
+  progress::-moz-progress-bar, progress::-webkit-progress-bar {
+    background: linear-gradient(90deg,#ffd33d,#ea4aaa 17%,#b34bff 34%,#01feff 51%,#ffd33d 68%,#ea4aaa 85%,#b34bff);
+      background-size: 300% 100%;
+      animation: progress-animation 2s linear infinite;
+    transition: 0.3s;
+  }
+
+  @keyframes progress-animation {
+    0% {
+      background-position: 100%;
+    }
+    100% {
+      background-position: 0;
+    }
+  }
+}
