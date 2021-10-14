@@ -30,9 +30,15 @@ const { $_ready, $_ } = Monogatari;
 
 $_ready (() => {
 	// 2. Inside the $_ready function:
+	// monogatari.db = new Dexie("thv_o");
+	// monogatari.db.version(1).stores({
+	// 	results: '++id,scene'
+	// });
+
 	const holistic = new monogatari.mediapipe.Holistic({
 		locateFile: (file) => {
-			return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.1.1617147418/${file}`;
+			// return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
+			return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.3.1620080860/${file}`;
 		}
 	});
 	holistic.setOptions({
@@ -54,6 +60,7 @@ $_ready (() => {
 	});
 	camera.start();
 
+	monogatari.debug.level(5);
 	monogatari.init ('#monogatari').then (() => {
 		// 3. Inside the init function:
 		// This will remove the "Back" button from the quick menu

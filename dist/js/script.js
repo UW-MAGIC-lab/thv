@@ -78,6 +78,13 @@ monogatari.characters ({
 	'y': {
 		name: 'Yui',
 		color: '#5bcaff'
+	},
+	'e': {
+		name: "Elder",
+		color: '#5bcaff',
+		sprites: {
+			elder: 'Elder.png'
+		}
 	}
 });
 
@@ -85,11 +92,57 @@ monogatari.script ({
 	// The game starts here.
 	'Start': [
 		'show scene #f7f6f6 with fadeIn',
-		'show background url("assets/scenes/new_hotness2.png")',
+		'show background url("assets/scenes/blue_background.png")',
 		'play music MainMusic.mp3 with loop',
+		'Stars zoom past your ship as you make your way through space. Navigating the stars is difficult, but you are an experienced pilot.',
+		'Suddenly, alarm bells begin to clang throughout the cabin. Something begins pulling your ship off course!',
+		'You jump to your feet to rush to the controls, but you are thrown to the floor and your vision goes black.',
+		'show background url("assets/scenes/SnowyForest_b_02.png")',
+		'When you regain consciousness, your eyes open to see an alien planet. Stumbling through the dense forest, you notice a golden light illuminating a path through the forest.',
+		'You follow the shimmering light until you reach clearing, and notice a strange being is standing in the open.',
+		'show character e elder at right',
+		'e You crashed here?',
+		"You nod.",
+		"e Let us help you.",
+		"e One thing I should mention -- in our culture, each member has developed a unique movement to greet each other. For example, try to match the movements on the right of the screen in order to learn my personal greeting.",
+		'hide character e',
 		'show pose_trainer aaa',
-		'hide poser_trainer'
+		'hide pose_trainer',
+		'You will be prompted by a statement and asked to answer a question.',
+		`Is the following statement <strong>always true</strong> or is it <strong>false</strong>?<br>
+		Speak your answers out loud as we voice record your voice.<br><br><br>
+		<strong>The diagonals of a rectangle always have the same length</strong>`,
+		`Explain why the statement is <strong>always true</strong> or is <strong>false</strong>.<br>
+		Speak your answers out loud as we voice record your voice:<br><br><br>
+		<strong>The diagonals of a rectangle always have the same length</strong>`,
+		'centered',
+		{
+			'Choice': {
+				'A': {
+					'Text': 'FALSE: Since a rectangle has shorter sides and longer sides, the diagonals will not be the same length.',
+					'Do': 'jump Ending'
+				},
+				'B': {
+					'Text': 'TRUE: Each diagonal divides any quadrilateral into two triangles that are the same.',
+					'Do': 'jump Ending'
+				},
+				'C': {
+					'Text': 'FALSE: Only a square has diagonals that are the same length.',
+					'Do': 'jump Ending'
+				},
+				'D': {
+					'Text': 'TRUE: Opposite sides of a rectangle are the same, so the right triangles formed by the diagonals have matching lengths for each of their side.',
+					'Do': 'jump Ending'
+				}
+			}
+		}
+	],
+	'Ending': [
+		'show character e elder at right',
+		'e Thank you for playing the prototype of THV-Online! We look forward to keeping you updated on improvements as they get developed.',
+		'end'
 	]
+
 	// 'Start': [
 	// 	'show scene #f7f6f6 with fadeIn',
 	// 	'show notification Welcome',

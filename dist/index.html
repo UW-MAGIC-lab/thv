@@ -4,7 +4,7 @@
 
 	<head prefix="og: http://ogp.me/ns#">
 
-		<title>Monogatari Visual Novel</title> <!--Up to 60-70 Characters. Optimal Format: Primary Keyword - Secondary Keyword | Brand Name-->
+		<title>PME-NA Demo -- THV Online</title> <!--Up to 60-70 Characters. Optimal Format: Primary Keyword - Secondary Keyword | Brand Name-->
 
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
@@ -76,9 +76,12 @@
 		<link rel="stylesheet" href="./style/main.css">
 
 		<!-- Third Party JavaScript Libraries -->
+		<script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+		<script src="https://unpkg.com/dexie-export-import@latest/dist/dexie-export-import.js"></script>
+
 
 		<!-- Monogatari JavaScript Libraries -->
-		<script src="./engine/debug/debug.js"></script>
+		<!-- <script src="./engine/debug/debug.js"></script> -->
 		<script src="./engine/core/monogatari.js"></script>
 		<script src="./js/options.js"></script>
 		<script src="./js/storage.js"></script>
@@ -117,7 +120,7 @@
 				<settings-screen></settings-screen>
 				<help-screen></help-screen>
 			</visual-novel>
-			<video class="input_video"></video>
+			<video class="input_video" style="display: none"></video>
 		</div>
 	</body>
 

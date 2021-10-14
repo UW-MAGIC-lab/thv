@@ -124,10 +124,10 @@ export class Pose {
   }
 
   fullyMatched() {
-    return (this._segmentSimilarity(this._rightArm, this.desiredPoseSet.rightArm) >= 80) &&
-      (this._segmentSimilarity(this._rightShoulder, this.desiredPoseSet.rightShoulder) >= 80) &&
-      (this._segmentSimilarity(this._leftArm, this.desiredPoseSet.leftArm) >= 80) &&
-      (this._segmentSimilarity(this._leftShoulder, this.desiredPoseSet.leftShoulder) >= 80);
+    return (this._segmentSimilarity(this._rightArm, this.desiredPoseSet.rightArm) >= 60) &&
+      (this._segmentSimilarity(this._rightShoulder, this.desiredPoseSet.rightShoulder) >= 60) &&
+      (this._segmentSimilarity(this._leftArm, this.desiredPoseSet.leftArm) >= 60) &&
+      (this._segmentSimilarity(this._leftShoulder, this.desiredPoseSet.leftShoulder) >= 60);
   }
 
   /***************
