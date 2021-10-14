@@ -29,6 +29,8 @@ class PoseEditor extends ScreenComponent {
       $_('#conjecture-list').toggleClass('hidden');
       $_('[data-action="back"]').toggleClass('hidden top left');
       $_('#editor-actions').toggleClass('hidden');
+      $_('#conjecture-container').toggleClass('hidden');
+      $_('#conjecture').collection[0].innerText = `Conjecture: ${conjecture.conjecture}`;
       $_(`[data-action="save-poses"]`).attribute('data-conjecture-id', conjectureId)
       let display = document.createElement('pose-display')
       self.setProps({
@@ -110,6 +112,8 @@ class PoseEditor extends ScreenComponent {
       $_('#conjecture-list').toggleClass('hidden');
       $_('[data-action="back"]').toggleClass('hidden top left');
       $_('#editor-actions').toggleClass('hidden');
+      $_('#conjecture-container').toggleClass('hidden');
+      $_('#conjecture').collection[0].innerText = ``;
       $_(`[data-action="save-poses"]`).attribute('data-conjecture-id', null)
     }, false);
 
@@ -126,6 +130,9 @@ class PoseEditor extends ScreenComponent {
         <button data-action="capture-pose">Capture Pose</button>
         <button data-action="save-poses">Save Poses</button>
         <button data-action="return-to-menu">Return To Conjectures</button>
+      </div>
+      <div class="row hidden" id="conjecture-container">
+        <h4 id="conjecture"></h4>
       </div>
       <div class="hidden row" id="save-message">
         <h2>Saving...</h2>

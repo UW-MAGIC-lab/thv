@@ -104,7 +104,7 @@ monogatari.script ({
 		'e You crashed here?',
 		"You nod.",
 		"e Let us help you.",
-		"e One thing I should mention -- in our culture, each members has developed a unique movement to greet each other. For example, try to match the movements on the right of the screen in order to learn my personal greeting.",
+		"e One thing I should mention -- in our culture, each member has developed a unique movement to greet each other. For example, try to match the movements on the right of the screen in order to learn my personal greeting.",
 		'hide character e',
 		'show pose_trainer aaa',
 		'hide pose_trainer',
