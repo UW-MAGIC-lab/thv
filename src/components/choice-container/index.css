@@ -48,21 +48,21 @@ choice-container {
 /** Medium Devices, Desktops (768px)**/
 @media screen and (min-width: 48em) {
 	choice-container {
-		width: 70%;
+		width: 80%;
 	}
 }
 
 /** Medium Devices, Desktops (992px)**/
 @media screen and (min-width: 62em) {
 	choice-container {
-		width: 50%;
+		width: 80%;
 	}
 }
 
 /** HD Screen, Large Devices, Wide Screens (1200px) **/
 @media screen and (min-width: 75em) {
 	choice-container {
-		width: 40%;
+		width: 80%;
 	}
 }
 

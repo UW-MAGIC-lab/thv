@@ -4,13 +4,20 @@ import { Action } from '../lib/Action';
 
 export class PoseTrainer extends Action {
 
-  static shouldProceed() {
+  static matchString([show, type]) {
+    return show === 'show' && type === 'pose_trainer';
+  }
 
+  static shouldProceed() {
     return new Promise((resolve, reject) => {
-      if ($_('pose-display').collection[0].props.switchCount < 1) {
-        reject('You must finish your training!');
+      if ($_('pose-display').collection[0]) {
+        if (!this.engine.global('skip-training') &&
+          $_('pose-display').collection[0].props.switchCount < 4) {
+          reject('You must finish your training!');
+        }
       }
 
+      this.engine.global('skip-training', false)
       resolve();
     });
   }
@@ -71,10 +78,6 @@ export class PoseTrainer extends Action {
     return Promise.all(promises);
   }
 
-  static matchString([show, type]) {
-    return show === 'show' && type === 'pose_trainer';
-  }
-
   // TODO: implement this
   static bind() {
     // window.addEventListener('resize', () => {
@@ -114,7 +117,6 @@ export class PoseTrainer extends Action {
 
   willApply() {
 
-    // this.object = Canvas.objects(this.name);
     if (this.conjecture.length === 0) {
       FancyError.show(
         `The conjecture with displayId of "${this.name}" was not found or is invalid`,
@@ -173,7 +175,6 @@ export class PoseTrainer extends Action {
   }
 
   apply() {
-    // const defaultFunction = () => Promise.resolve();
     this.element.setProps({
       desiredPose: {
         poseOne: this.conjecture[0].poseOne,
@@ -181,7 +182,7 @@ export class PoseTrainer extends Action {
       },
       classes: [],
       comparisonPose: "PoseOne",
-      switchCount: 0
+      switchCount: 0,
     });
     this.element.addEventListener('poseSwitch', (e) => {
       let poseToSwitch = this.element.props.comparisonPose === "PoseOne" ? "PoseTwo" : "PoseOne";
@@ -190,12 +191,11 @@ export class PoseTrainer extends Action {
         comparisonPose: poseToSwitch,
         switchCount: switchCount
       });
-      this.engine.proceed(false, false, false);
+      this.engine.proceed({ userInitiated: false, skip: false, autoPlay: false });
     })
-
     const gameScreen = this.engine.element().find('[data-screen="game"]');
     gameScreen.find('[data-ui="background"]').append(this.element);
-
+    this.engine.element().find('[data-component="text-box"]').hide()
     return Promise.resolve();
   }
 
@@ -207,11 +207,7 @@ export class PoseTrainer extends Action {
     if (updateState === true) {
       this.engine.state('poseTrainer').push(this._statement);
     }
-
-    if (this.mode === 'background' || this.mode === 'character' || this.mode === 'displayable') {
-      return Promise.resolve({ advance: true });
-    }
-
+    this.engine.global('_engine_block', true);
     return Promise.resolve({ advance: false });
   }
 
@@ -286,6 +282,6 @@ export class PoseTrainer extends Action {
   }
 }
 
-PoseTrainer.id = 'pose-trainer';
+PoseTrainer.id = 'PoseTrainer';
 
 export default PoseTrainer;

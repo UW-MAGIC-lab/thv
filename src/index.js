@@ -233,6 +233,7 @@ import HideCharacter from './actions/HideCharacter.js';
 import HideCharacterLayer from './actions/HideCharacterLayer.js';
 import HideImage from './actions/HideImage.js';
 import HideParticles from './actions/HideParticles.js';
+import HidePoseTrainer from './actions/HidePoseTrainer.js';
 import HideVideo from './actions/HideVideo.js';
 import InputModal from './actions/InputModal.js';
 import Jump from './actions/Jump.js';
@@ -267,6 +268,7 @@ Monogatari._actions = [
 	HideCharacterLayer,
 	HideImage,
 	HideParticles,
+	HidePoseTrainer,
 	HideVideo,
 	InputModal,
 	Jump,

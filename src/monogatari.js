@@ -2067,7 +2067,7 @@ class Monogatari {
 			return this.willProceed ().then (() => {
 				return this.next ();
 			});
-		});
+		})
 	}
 
 	static rollback () {
@@ -2151,7 +2151,6 @@ class Monogatari {
 			}
 
 			this.debug.debug ('Checking Extra Conditions');
-
 			return Promise.all (promises).then ((...args) => {
 				this.debug.groupEnd ();
 				return Promise.resolve (...args);
@@ -2647,6 +2646,18 @@ class Monogatari {
 						this.skip (false);
 					} else {
 						this.skip (true);
+					}
+				}
+			}
+		});
+
+		this.registerListener('next', {
+			keys: 'n',
+			callback: () => {
+				if (this.global('playing')) {
+					if (this.element().find(`[data-component="pose-display"]`)) {
+						this.global('skip-training', true);
+						this.proceed({ userInitiated: true, skip: false, autoPlay: false });
 					}
 				}
 			}
@@ -3239,21 +3250,21 @@ Monogatari._settings = {
 	'ForceAspectRatio': 'None',
 
 	// Enables or disables the typing text animation for the whole game.
-	'TypeAnimation': true,
+	'TypeAnimation': false,
 
 	// Enables or disables the typing text animation in NVL dialogs for the
 	// whole game.
-	'NVLTypeAnimation': true,
+	'NVLTypeAnimation': false,
 
 	// Enables or disables the typing animation for the narrator.
 	// If the previous property was set to false, the narrator won't shown
 	// the animation even if this is set to true.
-	'NarratorTypeAnimation': true,
+	'NarratorTypeAnimation': false,
 
 	// Enables or disables the typing animation for the special centered
 	// character. If the TypeAnimation property was set to false, the centered
 	// character won't shown the animation even if this is set to true.
-	'CenteredTypeAnimation': true,
+	'CenteredTypeAnimation': false,
 
 	// Force some orientation on mobile devices. If this setting is set either
 	// to portrait or landscape, a warning message will be displayed so the
